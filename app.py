@@ -3,6 +3,7 @@ import numpy as np
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.resnet50 import preprocess_input
+import time
 
 # Load your pre-trained model
 model = load_model("cnnDrowsiness.h5")
@@ -28,7 +29,11 @@ def main():
 
     if uploaded_file is not None:
         st.image(uploaded_file, caption="Uploaded Image.", use_column_width=True)
-
+        st.toast("Predicting!!!")
+        time.sleep(.5)
+        st.toast('HOLUP!')
+        time.sleep(.5)
+        st.toast('Hooray!', icon='🎉')
         # Preprocess and classify the uploaded image
         img_array = preprocess_image(uploaded_file)
         class_index = classify_image(img_array)
@@ -42,9 +47,11 @@ def main():
 
         # Display result
         if class_index in [0, 2]:
-            st.warning("Drowsy")
+            st.warning("Drowsy! Please Wake Up!", icon='😡')
+            st.snow()
         else:
-            st.success("Not Drowsy")
+            st.success("Not Drowsy!", icon='👍' )
+            st.balloons()
 
 if __name__ == "__main__":
     main()
